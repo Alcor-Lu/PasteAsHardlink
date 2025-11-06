@@ -59,20 +59,20 @@ GetCurrentExplorerPath(hwnd := WinExist("A")) {
 		ofname := Trim(value, "`"") ;ofname 代表原始文件名（无引号）
 		SplitPath(ofname, &filename) ;判断是否是文件夹
 		AttributeString := FileExist(ofname)
-	}
-	if(AttributeString = "D"){
-		MsgBox("错误！不能创建文件夹的硬链接！")
-	}
-	HardlinkPath := path . "\" . filename ;HardlinkPath代表硬链接全路径
-	AttributeString := FileExist(HardlinkPath) ;判断是否有同名文件
-	if(AttributeString != ""){
-		MsgBox("错误！当前目录存在同名文件！")
-	}else if(SubStr(HardlinkPath, 1, 1)=SubStr(ofname, 1, 1))
-	{
-		sc := "mklink /H `"" . HardlinkPath . "`" `"" . ofname . "`""
-		Run("cmd.exe /c " sc, , "hide")
-	}else{
-		MsgBox("错误！不能跨驱动器创建硬链接！")
+		if(AttributeString = "D"){
+			MsgBox("错误！不能创建文件夹的硬链接！")
+		}
+		HardlinkPath := path . "\" . filename ;HardlinkPath代表硬链接全路径
+		AttributeString := FileExist(HardlinkPath) ;判断是否有同名文件
+		if(AttributeString != ""){
+			MsgBox("错误！当前目录存在同名文件！")
+		}else if(SubStr(HardlinkPath, 1, 1)=SubStr(ofname, 1, 1))
+		{
+			sc := "mklink /H `"" . HardlinkPath . "`" `"" . ofname . "`""
+			Run("cmd.exe /c " sc, , "hide")
+		}else{
+			MsgBox("错误！不能跨驱动器创建硬链接！")
+		}
 	}
 }
 
